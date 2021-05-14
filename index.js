@@ -148,6 +148,7 @@ definition.action({
       }
     }
   },
+  waitForEvents: true,
   async execute({ picture, original }, { client, service }, emit) {
     const upload = await app.dao.get(['database', 'tableObject', app.databaseName, 'uploads', original.uploadId])
     if(!upload) throw new Error("upload_not_found")
@@ -198,6 +199,7 @@ definition.action({
       validation: ['nonEmpty']
     }
   },
+  waitForEvents: true,
   async execute({ name, original, purpose }, { client, service }, emit) {
     const picture = app.generateUid()
     const upload = await app.dao.get(['database', 'tableObject', app.databaseName, 'uploads', original.uploadId])
@@ -256,6 +258,7 @@ definition.action({
     },
     uploadId: {type: String}
   },
+  waitForEvents: true,
   async execute({ picture, crop, uploadId }, {client, service}, emit) {
     const pictureRow = await Picture.get(picture)
     if(!pictureRow) throw new Error("not_found")
@@ -371,6 +374,7 @@ definition.trigger({
       defaultValue: true
     }
   },
+  waitForEvents: true,
   async execute({ name, purpose, url, owner, cropped }, { service, client }, emit) {
     const picture = app.generateUid()
 
