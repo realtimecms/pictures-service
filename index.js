@@ -327,29 +327,6 @@ definition.action({
   }
 })
 
-function downloadFile(url, to, maxSize) {
-  return new Promise( (resolve, reject) => {
-    const file = fs.createWriteStream(to)
-
-    const request = http.get(url, response => {
-      const downloadSize = +response.headers['Content-Length']
-      console.log("CL", downloadSize)
-      if(downloadSize > maxSize) {
-        reject("tooBig")
-      } else {
-        response.pipe(file)
-        file.on('finish', function () {
-          file.close(() => resolve('ok')) // close() is async, call cb after close completes.
-        })
-      }
-    })
-    request.on('error', function(err) { // Handle errors
-      fs.unlink(to); // Delete the file async. (But we don't check the result)
-      reject(err.message)
-    })
-  })
-}
-
 definition.trigger({
   name: "createPictureFromUrl",
   properties: {
