@@ -418,9 +418,6 @@ async function start() {
   await app.updateService(definition)//, { force: true })
   const service = await app.startService(definition, { runCommands: true, handleEvents: true })
 
-  /*require("../config/metricsWriter.js")(definition.name, () => ({
-
-  }))*/
 }
 
 if (require.main === module) start().catch( error => { console.error(error); process.exit(1) })
